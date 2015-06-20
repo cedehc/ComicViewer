@@ -70,7 +70,10 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-public abstract class ComicViewerActivity extends Activity {
+import android.support.v4.widget.DrawerLayout;
+
+public abstract class ComicViewerActivity extends Activity
+        implements ComicDrawerFragment.NavigationDrawerCallbacks  {
 
     static class CouldntParseComicPage extends Exception {
         private static final long serialVersionUID = 1L;
@@ -88,6 +91,8 @@ public abstract class ComicViewerActivity extends Activity {
     protected IComicDefinition comicDef;
     protected IComicProvider provider;
     private EditText comicIdSel;
+
+    private ComicDrawerFragment mComicDrawerFragment;
 
     private ImageView bookmarkBtn = null;
 
@@ -310,6 +315,14 @@ public abstract class ComicViewerActivity extends Activity {
                 goToFinal();
             }
         }
+
+        mComicDrawerFragment = (ComicDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+
+        // Set up the drawer.
+        mComicDrawerFragment.setUp(
+            R.id.navigation_drawer,
+            (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     public void showArchive() {
@@ -896,5 +909,14 @@ public abstract class ComicViewerActivity extends Activity {
                 loadComic(createComicUri(data.getStringExtra(getPackageName() + "comicId")));
             }
         }
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        // update the main content by replacing fragments
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .commit();*/
     }
 }
