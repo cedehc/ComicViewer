@@ -113,6 +113,7 @@ public abstract class ComicViewerActivity extends Activity
     protected abstract Class<? extends ArchiveActivity> getArchiveActivityClass();
     protected abstract String getStringAppName();
     protected abstract String getStringAboutText();
+    protected abstract ComicListAdapter getComicListAdapter(Context context);
     
     protected void resetContent() {
         comicDef = makeComicDef();
@@ -322,7 +323,8 @@ public abstract class ComicViewerActivity extends Activity
         // Set up the drawer.
         mComicDrawerFragment.setUp(
             R.id.navigation_drawer,
-            (DrawerLayout) findViewById(R.id.drawer_layout));
+            (DrawerLayout) findViewById(R.id.drawer_layout),
+            getComicListAdapter(getBaseContext()));
     }
 
     public void showArchive() {

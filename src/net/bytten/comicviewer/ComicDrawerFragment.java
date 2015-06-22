@@ -50,6 +50,8 @@ public class ComicDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    private ComicListAdapter mComicListAdapter;
+
     public ComicDrawerFragment() {
     }
 
@@ -89,15 +91,6 @@ public class ComicDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActivity().getBaseContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        "xkcd",
-                        "WillTirando",
-                        "AbstruseGoose",
-                }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -112,9 +105,12 @@ public class ComicDrawerFragment extends Fragment {
      * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    public void setUp(int fragmentId, DrawerLayout drawerLayout) {
+    public void setUp(int fragmentId, DrawerLayout drawerLayout, ComicListAdapter adapter) {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
+
+        mComicListAdapter = adapter;
+        mDrawerListView.setAdapter(mComicListAdapter);
 
         // set up the drawer's list view with items and click listener
 
