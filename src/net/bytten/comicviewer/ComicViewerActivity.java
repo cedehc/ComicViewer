@@ -328,11 +328,13 @@ public abstract class ComicViewerActivity extends Activity
     }
 
     public void showArchive() {
-        Intent i = new Intent(this, getArchiveActivityClass());
-        i.setData(comicDef.getArchiveUrl());
-        i.setAction(Intent.ACTION_VIEW);
-        i.putExtra(getPackageName() + "LoadType", ArchiveActivity.LoadType.ARCHIVE);
-        startActivityForResult(i, PICK_ARCHIVE_ITEM);
+        if (getArchiveActivityClass() != null) {
+            Intent i = new Intent(this, getArchiveActivityClass());
+            i.setData(comicDef.getArchiveUrl());
+            i.setAction(Intent.ACTION_VIEW);
+            i.putExtra(getPackageName() + "LoadType", ArchiveActivity.LoadType.ARCHIVE);
+            startActivityForResult(i, PICK_ARCHIVE_ITEM);
+        }
     }
 
     public void showBookmarks() {
