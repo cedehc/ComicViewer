@@ -114,12 +114,24 @@ public abstract class ComicViewerActivity extends Activity
     protected abstract String getStringAppName();
     protected abstract String getStringAboutText();
     protected abstract ComicListAdapter getComicListAdapter(Context context);
+    protected abstract void changeComicSel(int position);
     
+    public void updateComic() {
+        /* TODO unfortunate copy&paste from resetContent(), need
+         * to make it better.
+         */
+        comicDef = makeComicDef();
+        provider = comicDef.getProvider();
+        comicInfo = provider.createEmptyComicInfo();
+
+        goToFinal();
+    }
+
     protected void resetContent() {
         comicDef = makeComicDef();
         provider = comicDef.getProvider();
         comicInfo = provider.createEmptyComicInfo();
-        
+
         //Only hide the title bar if we're running an android less than Android 3.0
         if(VersionHacks.getSdkInt() < 11)
             requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -917,10 +929,6 @@ public abstract class ComicViewerActivity extends Activity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        /*FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();*/
+        changeComicSel(position);
     }
 }
